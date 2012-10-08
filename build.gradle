@@ -1,0 +1,9 @@
+/**
+ * The build file for Gradle Utils
+ */
+
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+
+version = project.hasProperty('environment') && environment != 'release' ? 
+	"${version}-SNAPSHOT" : version;
