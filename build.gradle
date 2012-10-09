@@ -16,8 +16,10 @@ dependencies {
 	testCompile 'junit:junit:4.10'
 }
 
-task release() << {
-	logger.warn("Releasing ${project.name} version ${version}")
+task release() {
+	doFirst {
+		logger.warn("------- Releasing ${project.name} version ${version} ------- ")
+	}
 }
 
 gradle.taskGraph.whenReady {taskGraph ->
