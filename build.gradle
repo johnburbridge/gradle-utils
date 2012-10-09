@@ -3,7 +3,28 @@
  */
 
 apply plugin: 'groovy'
+apply plugin: 'maven'
 apply plugin: 'eclipse'
 
-version = project.hasProperty('environment') && environment != 'release' ? 
-	"${version}-SNAPSHOT" : version;
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile gradleApi()
+	groovy localGroovy()
+	testCompile 'junit:junit:4.10'
+}
+
+task release() << {
+	logger.warn("Releasing ${project.name} version ${version}")
+}
+
+gradle.taskGraph.whenReady {taskGraph ->
+	if (!taskGraph.hasTask(release))
+		version = "${version}-SNAPSHOT"
+}
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.2'
+}
